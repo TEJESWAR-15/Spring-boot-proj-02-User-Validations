@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Centered Form</title>
+    <style>
+      body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #007bff; /* Optional: Background color */
+      }
+      .form-container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      }
+    </style>
+	<script>
+	        $(document).ready(function () {
+	            $("#countryId").on("change", function () {
+	                var countryId = $("#countryId").val();
+	                console.log("Selected Country ID:", countryId); // Debugging
+
+	                $('#stateId').empty().append('<option value="">-Select-</option>');
+	                $('#cityId').empty().append('<option value="">-Select-</option>');
+
+	                if (countryId) {
+	                    $.ajax({
+	                        type: 'GET',
+	                        url: '/states/' + countryId,
+	                        dataType: 'json',
+	                        success: function (response) {
+	                            console.log("States Response:", response); // Debugging
+	                            $.each(response, function (key, value) {
+	                                $('#stateId').append($('<option>', {
+	                                    value: key,
+	                                    text: value
+	                                }));
+	                            });
+	                        },
+	                        error: function () {
+	                            alert("Error fetching states.");
+	                        }
+	                    });
+	                }
+	            });
+
+	            $("#stateId").on("change", function () {
+	                var stateId = $("#stateId").val();
+	                console.log("Selected State ID:", stateId); // Debugging
+
+	                $('#cityId').empty().append('<option value="">-Select-</option>');
+
+	                if (stateId) {
+	                    $.ajax({
+	                        type: 'GET',
+	                        url: '/cities/' + stateId,
+	                        dataType: 'json',
+	                        success: function (response) {
+	                            console.log("Cities Response:", response); // Debugging
+	                            $.each(response, function (key, value) {
+	                                $('#cityId').append($('<option>', {
+	                                    value: key,
+	                                    text: value
+	                                }));
+	                            });
+	                        },
+	                        error: function () {
+	                            alert("Error fetching cities.");
+	                        }
+	                    });
+	                }
+	            });
+	        });
+	    </script>
+
+  </head>
+  <body>
+	
+		
+    <form class="form-container" method="post" action="/register">
+		<h1><u>Register</u></h1>
+      <div class="form-group mb-3">
+        <label for="username" class="form-label">User Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+      </div>
+	  <div th:if="${error}" class="alert alert-danger">
+	      <p th:text="${error}"></p>
+	  </div>
+	  <div class="form-group mb-3">
+	          <label for="email" class="form-label">Email</label>
+	          <input type="email" class="form-control" id="email"  name="email" placeholder="ABCD@gmail.com">
+	   </div>
+      <div class="form-group mb-3">
+        <label for="phone" class="form-label">Mobile Number</label>
+        <input type="tel" class="form-control" id="phno"  name="phno" placeholder="+91 xxxxxxxxxx">
+      </div>
+	  <div class="form-group mb-3">
+	          <label for="countryId" class="form-label">Country</label>
+	          <select class="form-control form-control-sm" id="countryId" name="countryId">
+	            <option value="">-Select-</option>
+	            <option th:each="entry : ${countries.entrySet()}" th:value="${entry.key}" th:text="${entry.value}"></option>
+	          </select>
+	        </div>
+	        <div class="form-group mb-3">
+	          <label for="stateId" class="form-label">State</label>
+	          <select name="stateId" id="stateId" class="form-control form-control-sm">
+	            <option value="">-Select-</option>
+	          </select>
+	        </div>
+	        <div class="form-group mb-3">
+	          <label for="cityId" class="form-label">City</label>
+	          <select id="cityId"  name="cityId" class="form-control form-control-sm">
+	            <option value="">-Select-</option>
+	          </select>
+	        </div>
+		  <div class="for-group mb-3">
+      		<button type="submit" class="btn btn-primary w-100" >register</button>
+	  	</div>
+	  <div class="for-group mb-3">
+	  	<a href="/" class="form-control form-control-sm btn btn-primary w-100" role="button" aria-pressed="true" > Login</a>
+	  </div>
+    </form>
+  </body>
+</html>
