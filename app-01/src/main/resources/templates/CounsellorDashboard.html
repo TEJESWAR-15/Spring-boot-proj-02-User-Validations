@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Centered Form</title>
+    <style>
+      body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #007bff; /* Optional: Background color */
+      }
+      .form-container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      }
+    </style>
+  </head>
+  <body id="info">
+	
+	<div class="form-container">
+	      <div class="form-group mb-3">
+	        <label for="name" class="form-label">Total Enquires</label>
+	        <input type="text" class="form-control" id="totalEnq" name="totalEnq" th:placeholder="${dashboardInfo.totalEnqCnt}" readonly>
+	      </div>
+	      <div class="form-group mb-3">
+	        <label for="inputEmail4" class="form-label">Open Enquires</label>
+	        <input type="email" class="form-control" id="openEnq" name="openEnq" th:placeholder="${dashboardInfo.openEnqCnt}" readonly>
+	      </div>
+	      <div class="form-group mb-3">
+	        <label for="inputPassword4" class="form-label">Enrolled Enquires</label>
+	        <input type="password" class="form-control" id="enrolledEnq" name="enrolledEnq" th:placeholder="${dashboardInfo.enrolledEnqCnt}" readonly>
+	      </div>
+	      <div class="form-group mb-3">
+	        <label for="phoneNumber" class="form-label">Lost Enquires</label>
+	        <input type="tel" class="form-control" id="lostEnq"  name="lostEnq" th:placeholder="${dashboardInfo.lostEnqCnt}" readonly>
+	      </div>
+		  <div class="form-group mb-3">
+			<a th:href="@{/addEnquiry}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true"> Add Enquiry</a>
+			<a th:href="@{/viewEnquiries}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true"> View Enquiries</a>
+		  </div>
+		  <div class="form-group mb-3">
+			<a href="/logout" class="btn btn-danger btn-sm active" role="button" aria-pressed="true" > Log Out</a>
+		  </div>
+	   </div>
+	   
+   
+  </body>
+</html>

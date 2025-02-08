@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Centered Form</title>
+    <style>
+      body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #007bff; /* Optional: Background color */
+      }
+      .form-container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+	
+    <form class="form-container" method="post" th:action="@{/updateEnquiry/{enqId}(enqId=${enqId})}">
+		<h1><u>Edit Enquiry</u></h1>
+		<div class="form-group mb-3">
+		      <label for="name" class="form-label">Enquiry Id</label>
+		      <input type="text" class="form-control" id="enqId" name="enqId" th:value="${enqId}" readonly>
+		  </div>
+      <div class="form-group mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="stuName" name="stuName" th:value="${enquiryDto.stuName}">
+      </div>
+	  <div th:if="${error}" class="alert alert-danger">
+	      <p th:text="${error}"></p>
+	  </div>
+      <div class="form-group mb-3">
+        <label for="phoneNumber" class="form-label">Mobile Number</label>
+        <input type="tel" class="form-control" id="phoneNumber"  name="stuPhno" placeholder="+91 xxxxxxxxxx" th:value="${enquiryDto.stuPhno}">
+      </div>
+	  <div class="for-group mb-3">
+		<label for="classMode" class="form-label">Class Mode</label>
+				<select class="form-control form-control-sm" id="classMode" name="classMode">
+		          <option th:value="Offline" th:text="'Offline'" th:selected="${enquiryDto.classMode == 'Offline'}"></option>
+		          <option th:value="Online" th:text="'Online'" th:selected="${enquiryDto.classMode == 'Online'}"></option>
+		        </select>
+	  </div>
+	  <div class="for-group mb-3">
+		<label for="course" class="form-label">Course</label>
+		<select class="form-control form-control-sm" id="course" name="course" th:value="${enquiryDto.course}">
+		    <option th:text="'Java'" th:selected="${enquiryDto.course == 'Java'}">Java</option>
+		    <option th:text="'Phython'" th:selected="${enquiryDto.course == 'Phython'}">Phython</option>
+		    <option th:text="'.Net'" th:selected="${enquiryDto.course == '.Net'}">.Net</option>
+		    <option th:text="'React'" th:selected="${enquiryDto.course == 'React'}">React</option>
+		    <option th:text="'DSA'" th:selected="${enquiryDto.course == 'DSA'}">DSA</option>
+		    <option th:text="'Data Science'" th:selected="${enquiryDto.course == 'Data Science'}">Data Science</option>
+		    <option th:text="'Devops'" th:selected="${enquiryDto.course == 'Devops'}">Devops</option>
+		    <option th:text="'AWS Cloud'" th:selected="${enquiryDto.course == 'AWS Cloud'}">AWS Cloud</option>
+		</select>
+	  	  </div>
+		  <div class="for-group mb-3">
+			<label for="status" class="form-label">Status</label>
+			        <select class="form-control form-control-sm" id="enqStatus" name="enqStatus">
+			          <option th:value="Open" th:text="'Open'" th:selected="${enquiryDto.enqStatus == 'Open'}"></option>
+			          <option th:value="Closed" th:text="'Closed'" th:selected="${enquiryDto.enqStatus == 'Closed'}"></option>
+			          <option th:value="Enrolled" th:text="'Enrolled'" th:selected="${enquiryDto.enqStatus == 'Enrolled'}"></option>
+			        </select>
+		  </div>
+		  <input type="hidden" id="counsellorId" name="counsellorId" th:value="${counsellorId}">
+      <button type="submit" class="btn btn-primary w-100" >Update Enquiry</button>
+	  <div class="for-group mb-3">
+	  	  	<a th:href="'/viewEnquiries?counsellorId='+${counsellorId}" class="form-control form-control-sm btn btn-primary w-100" role="button" aria-pressed="true" > View Enquiries</a>
+	  </div>
+    </form>
+	
+	<!--<script>
+		 function setFormAction() { 
+			const form = document.getElementById('enquiryForm');
+			 
+			const enqId = document.getElementById('enqId').value; 
+			form.action = '/updateEnquiry?enqId=' + enqId; 
+		} 
+	</script>-->
+  </body>
+</html>
